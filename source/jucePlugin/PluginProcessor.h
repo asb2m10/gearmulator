@@ -8,6 +8,7 @@
 //==============================================================================
 class AudioPluginAudioProcessor  : public juce::AudioProcessor
 {
+    int currentProgram;
 public:
     //==============================================================================
     AudioPluginAudioProcessor();

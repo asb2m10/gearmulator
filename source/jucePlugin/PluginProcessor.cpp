@@ -3,6 +3,26 @@
 
 #include "../synthLib/os.h"
 
+class AudioParameterCC: public juce::AudioParameterInt
+{
+	int m_cc;
+	synthLib::Plugin *m_plugin;
+public:
+
+	AudioParameterCC(int cc, juce::String name, synthLib::Plugin *plugin) : AudioParameterInt(juce::String(cc), name, 0, 127, 0)
+	{
+		m_cc = cc;
+		m_plugin = plugin;
+	}
+
+	void valueChanged(int newValue) override
+	{
+		synthLib::SMidiEvent ev(0xB0, m_cc, newValue);
+		m_plugin->addMidiEvent(ev);
+	}
+};
+
+
 //==============================================================================
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
      : AudioProcessor (BusesProperties()
@@ -12,6 +32,94 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 	, m_device(synthLib::findROM())
 	, m_plugin(&m_device)
 {
+	addParameter(new AudioParameterCC(2, "BREATH WHEEL", &m_plugin));
+	addParameter(new AudioParameterCC(5, "PORTAMENTO TIME", &m_plugin));
+	addParameter(new AudioParameterCC(7, "VOLUME", &m_plugin));
+	addParameter(new AudioParameterCC(10, "PAN", &m_plugin));
+	addParameter(new AudioParameterCC(17, "OSCILLATORS 1 SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(18, "OSCILLATORS 1 WAVE SEL / PW", &m_plugin));
+	addParameter(new AudioParameterCC(19, "OSCILLATORS 1 WAVE", &m_plugin));
+	addParameter(new AudioParameterCC(20, "OSCILLATORS 1 SEMITONE", &m_plugin));
+	addParameter(new AudioParameterCC(21, "OSCILLATORS 1 KEYFOLLOW", &m_plugin));
+	addParameter(new AudioParameterCC(22, "OSCILLATORS 2 SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(23, "OSCILLATORS 2 WAVE SEL / PW", &m_plugin));
+	addParameter(new AudioParameterCC(24, "OSCILLATORS 2 WAVE", &m_plugin));
+	addParameter(new AudioParameterCC(25, "OSCILLATORS 2 SEMITONE", &m_plugin));
+	addParameter(new AudioParameterCC(26, "OSCILLATORS DETUNE 2/3", &m_plugin));
+	addParameter(new AudioParameterCC(27, "OSCILLATORS FM AMOUNT", &m_plugin));
+	addParameter(new AudioParameterCC(28, "OSCILLATORS SYNC", &m_plugin));
+	addParameter(new AudioParameterCC(29, "OSCILLATORS 2 Flt Env-Ptch", &m_plugin));
+	addParameter(new AudioParameterCC(30, "OSCILLATORS 2 Flt Env-FM", &m_plugin));
+	addParameter(new AudioParameterCC(31, "OSCILLATORS 2 KEYFOLLOW", &m_plugin));
+	addParameter(new AudioParameterCC(32, "BANK SELECT", &m_plugin));
+	addParameter(new AudioParameterCC(33, "MIX OSC BAL", &m_plugin));
+	addParameter(new AudioParameterCC(34, "MIX SUB OSC", &m_plugin));
+	addParameter(new AudioParameterCC(35, "SUB OSCILLATOR SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(36, "MIX OSC VOL (SATURATION)", &m_plugin));
+	addParameter(new AudioParameterCC(37, "MIX NOISE", &m_plugin));
+	addParameter(new AudioParameterCC(38, "MIX RING MOD", &m_plugin));
+	addParameter(new AudioParameterCC(39, "NOISE COLOR", &m_plugin));
+	addParameter(new AudioParameterCC(40, "FILTER CUT OFF 1", &m_plugin));
+	addParameter(new AudioParameterCC(41, "FILTER CUT OFF 2", &m_plugin));
+	addParameter(new AudioParameterCC(42, "FILTER RESONANCE 1", &m_plugin));
+	addParameter(new AudioParameterCC(43, "FILTER RESONANCE 2", &m_plugin));
+	addParameter(new AudioParameterCC(44, "FILTER ENV AMOUNT 1", &m_plugin));
+	addParameter(new AudioParameterCC(45, "FILTER ENV AMOUNT 2", &m_plugin));
+	addParameter(new AudioParameterCC(46, "FILTER KEYFOLLOW 1", &m_plugin));
+	addParameter(new AudioParameterCC(47, "FILTER KEYFOLLOW 2", &m_plugin));
+	addParameter(new AudioParameterCC(48, "FILTER BALANCE", &m_plugin));
+	addParameter(new AudioParameterCC(49, "FILTER SATURATION CURVE", &m_plugin));
+	addParameter(new AudioParameterCC(51, "FILTER 1 MODE", &m_plugin));
+	addParameter(new AudioParameterCC(52, "FILTER 2 MODE", &m_plugin));
+	addParameter(new AudioParameterCC(53, "FILTER ROUTING", &m_plugin));
+	addParameter(new AudioParameterCC(54, "FILTER ENV ATTACK", &m_plugin));
+	addParameter(new AudioParameterCC(55, "FILTER ENV DECAY", &m_plugin));
+	addParameter(new AudioParameterCC(56, "FILTER ENV SUSTAIN", &m_plugin));
+	addParameter(new AudioParameterCC(57, "FILTER ENV TIME", &m_plugin));
+	addParameter(new AudioParameterCC(58, "FILTER ENV RELEASE", &m_plugin));
+	addParameter(new AudioParameterCC(59, "AMP ENV ATTACK", &m_plugin));
+	addParameter(new AudioParameterCC(60, "AMP ENV DECAY", &m_plugin));
+	addParameter(new AudioParameterCC(61, "AMP ENV SUSTAIN", &m_plugin));
+	addParameter(new AudioParameterCC(62, "AMP ENV TIME", &m_plugin));
+	addParameter(new AudioParameterCC(63, "AMP ENV RELEASE", &m_plugin));
+	addParameter(new AudioParameterCC(64, "SUSTAIN", &m_plugin));
+	addParameter(new AudioParameterCC(61, "AMP ENV SUSTAIN", &m_plugin));
+	addParameter(new AudioParameterCC(67, "LFOS/MOD LFO1 RATE", &m_plugin));
+	addParameter(new AudioParameterCC(68, "LFOS/MOD LFO1 SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(69, "LFOS/MOD LFO1 ENV MODE", &m_plugin));
+	addParameter(new AudioParameterCC(70, "LFOS/MOD LFO1 MODE (POLY/MONO)", &m_plugin));
+	addParameter(new AudioParameterCC(71, "LFOS/MOD LFO1 CONTOUR", &m_plugin));
+	addParameter(new AudioParameterCC(72, "LFOS/MOD LFO1 KEYFOLLOW", &m_plugin));
+	addParameter(new AudioParameterCC(73, "LFOS/MOD LFO1 TRIG PHASE", &m_plugin));
+	addParameter(new AudioParameterCC(79, "LFOS/MOD LFO2 RATE", &m_plugin));
+	addParameter(new AudioParameterCC(80, "LFOS/MOD LFO2 SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(81, "LFOS/MOD LFO2 ENV MODE", &m_plugin));
+	addParameter(new AudioParameterCC(82, "LFOS/MOD LFO2 MODE (POLY/MONO)", &m_plugin));
+	addParameter(new AudioParameterCC(83, "LFOS/MOD LFO2 CONTOUR", &m_plugin));
+	addParameter(new AudioParameterCC(84, "LFOS/MOD LFO2 KEYFOLLOW", &m_plugin));
+	addParameter(new AudioParameterCC(85, "LFOS/MOD LFO2 TRIG PHASE", &m_plugin));
+	addParameter(new AudioParameterCC(91, "PATCH VOLUME", &m_plugin));
+	addParameter(new AudioParameterCC(93, "TRANSPOSE", &m_plugin));
+	addParameter(new AudioParameterCC(94, "KEY MODE", &m_plugin));
+	addParameter(new AudioParameterCC(97, "UNISON MODE", &m_plugin));
+	addParameter(new AudioParameterCC(98, "UNISON DETUNE", &m_plugin));
+	addParameter(new AudioParameterCC(99, "UNISON PAN SPREAD", &m_plugin));
+	addParameter(new AudioParameterCC(100, "UNISON LFO PHASE", &m_plugin));
+	addParameter(new AudioParameterCC(101, "EFFECTS VOCODER INPUT MODE", &m_plugin));
+	addParameter(new AudioParameterCC(102, "EFFECTS VOCODER INPUT SELECT", &m_plugin));
+	addParameter(new AudioParameterCC(105, "EFFECTS TYPE/MIX", &m_plugin));
+	addParameter(new AudioParameterCC(106, "EFFECTS CHORUS RATE", &m_plugin));
+	addParameter(new AudioParameterCC(107, "EFFECTS INTENSITY", &m_plugin));
+	addParameter(new AudioParameterCC(108, "EFFECTS CHORUS DELAY", &m_plugin));
+	addParameter(new AudioParameterCC(109, "EFFECTS CHORUS FEEDBACK", &m_plugin));
+	addParameter(new AudioParameterCC(110, "EFFECTS CHORUS SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(112, "EFFECTS DELAY/REVERB MODE", &m_plugin));
+	addParameter(new AudioParameterCC(113, "EFFECTS SEND", &m_plugin));
+	addParameter(new AudioParameterCC(115, "EFFECTS FEEDBACK/DAMPING", &m_plugin));
+	addParameter(new AudioParameterCC(116, "EFFECTS DELAY RATE", &m_plugin));
+	addParameter(new AudioParameterCC(117, "EFFECTS DELAY DEPTH / REVERB TYPE", &m_plugin));
+	addParameter(new AudioParameterCC(118, "EFFECTS DELAY SHAPE", &m_plugin));
+	addParameter(new AudioParameterCC(119, "EFFECTS DELAY COLOR / REVERB COLOR", &m_plugin));
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
@@ -58,24 +166,24 @@ double AudioPluginAudioProcessor::getTailLengthSeconds() const
 
 int AudioPluginAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    return 127;
 }
 
 int AudioPluginAudioProcessor::getCurrentProgram()
 {
-    return 0;
+    return currentProgram;
 }
 
 void AudioPluginAudioProcessor::setCurrentProgram (int index)
 {
-    juce::ignoreUnused (index);
+    currentProgram = index;
+	synthLib::SMidiEvent ev(0xC0, index);
+	addMidiEvent(ev);
 }
 
 const juce::String AudioPluginAudioProcessor::getProgramName (int index)
 {
-    juce::ignoreUnused (index);
-    return "default";
+    return juce::String("Program Number:") + juce::String(index);
 }
 
 void AudioPluginAudioProcessor::changeProgramName (int index, const juce::String& newName)
