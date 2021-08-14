@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+using std::size_t;
+
 namespace synthLib
 {
 	class AudioBuffer
