@@ -178,7 +178,7 @@ int AudioPluginAudioProcessor::getCurrentProgram()
 
 void AudioPluginAudioProcessor::setCurrentProgram (int index)
 {
-    currentProgram = index;
+	currentProgram = index;
 	synthLib::SMidiEvent ev(0xC0, index);
 	addMidiEvent(ev);
 }

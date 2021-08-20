@@ -15,23 +15,35 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     // editor's size to whatever you need it to be.
     setSize (400, 300);
 
-	addAndMakeVisible(m_btSingleMode);
-	addAndMakeVisible(m_btMultiMode);
+	addAndMakeVisible(m_mode);
+	addAndMakeVisible(m_presets);
 
-	m_btSingleMode.setTopLeftPosition(0,0);
-	m_btSingleMode.setSize(120,30);
+	m_mode.setTopLeftPosition(0,0);
+	m_mode.addItem("Single Mode", 1);
+	m_mode.addItem("Multi Mode", 2);
+	m_mode.setSelectedId(1);
+	m_mode.setSize(120,30);
 
-	m_btMultiMode.setTopLeftPosition(m_btSingleMode.getPosition().x + m_btSingleMode.getWidth() + 10, 0);
-	m_btMultiMode.setSize(120,30);
-
-	m_btSingleMode.onClick = [this]()
+	m_mode.onChange = [this]()
 	{
-		switchPlayMode(0);
+		if (m_mode.getSelectedId() == 1)
+			switchPlayMode(0);
+		else
+			switchPlayMode(2);
 	};
 
-	m_btMultiMode.onClick = [this]()
+	m_presets.setTopRighPosition(0,0);
+	m_presets.setSize(250,30);
+
+	for (int i=0; i<127; ++i)
 	{
-		switchPlayMode(2);
+		m_presets.addItem(processorRef.singlePresetNames[i], i+1);
+	}
+	m_preset.setSelectedId(processorRef.getCurrentProgram()+1);
+
+	m_presets.onChange = [this]()
+	{
+		processorRef.setCurrentProgram(m_presets.getSelectedId()-1);
 	};
 }
 

@@ -57,6 +57,7 @@ public:
 
 	// _____________
 	//
+    std::vector<std::string>            singlePresetNames;
 private:
 	void setState(const void* _data, size_t _sizeInBytes);
 	
@@ -66,5 +67,4 @@ private:
 	virusLib::Device					m_device;
 	synthLib::Plugin					m_plugin;
 	std::vector<synthLib::SMidiEvent>	m_midiOut;
-    std::vector<std::string>            singlePresetNames;
 };

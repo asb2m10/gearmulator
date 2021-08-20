@@ -20,6 +20,9 @@ private:
     // access the processor object that created it.
     AudioPluginAudioProcessor& processorRef;
 
+
+    juce::ComboBox m_mode;
+    juce::ComboBox m_presets;
 	juce::TextButton m_btSingleMode;
 	juce::TextButton m_btMultiMode;
 	
