@@ -24,6 +24,7 @@ namespace virusLib
 
 		uint32_t getInternalLatencySamples() const override;
 
+		std::vector<std::string> getSingleNames();
 	private:
 		bool sendMidi(const synthLib::SMidiEvent& _ev, std::vector<synthLib::SMidiEvent>& _response) override;
 		void readMidiOut(std::vector<synthLib::SMidiEvent>& _midiOut) override;

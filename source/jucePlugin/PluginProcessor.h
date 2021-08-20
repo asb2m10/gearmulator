@@ -66,4 +66,5 @@ private:
 	virusLib::Device					m_device;
 	synthLib::Plugin					m_plugin;
 	std::vector<synthLib::SMidiEvent>	m_midiOut;
+    std::vector<std::string>            singlePresetNames;
 };

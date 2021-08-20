@@ -32,6 +32,8 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 	, m_device(synthLib::findROM())
 	, m_plugin(&m_device)
 {
+	singlePresetNames = m_device.getSingleNames();
+
 	addParameter(new AudioParameterCC(2, "BREATH WHEEL", &m_plugin));
 	addParameter(new AudioParameterCC(5, "PORTAMENTO TIME", &m_plugin));
 	addParameter(new AudioParameterCC(7, "VOLUME", &m_plugin));
@@ -183,7 +185,7 @@ void AudioPluginAudioProcessor::setCurrentProgram (int index)
 
 const juce::String AudioPluginAudioProcessor::getProgramName (int index)
 {
-    return juce::String("Program Number:") + juce::String(index);
+    return singlePresetNames[index];
 }
 
 void AudioPluginAudioProcessor::changeProgramName (int index, const juce::String& newName)

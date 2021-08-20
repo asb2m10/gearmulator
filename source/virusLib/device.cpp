@@ -103,4 +103,18 @@ namespace virusLib
 
 		m_syx.sendPendingMidiEvents(m_numSamplesWritten >> 1);
 	}
+
+	std::vector<std::string> Device::getSingleNames()
+	{
+		std::vector<std::string> ret;
+		ROMFile::TPreset preset;
+
+		for(int i=0;i<255;i++)
+		{
+			m_rom.getSingle(0, i, preset);
+			ret.push_back(m_rom.getSingleName(preset));
+		}
+
+		return ret;
+	}
 }
