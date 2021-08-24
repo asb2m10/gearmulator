@@ -32,14 +32,14 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 			switchPlayMode(2);
 	};
 
-	m_presets.setTopRighPosition(0,0);
+	m_presets.setTopRightPosition(400-250,0);
 	m_presets.setSize(250,30);
 
 	for (int i=0; i<127; ++i)
 	{
 		m_presets.addItem(processorRef.singlePresetNames[i], i+1);
 	}
-	m_preset.setSelectedId(processorRef.getCurrentProgram()+1);
+	m_presets.setSelectedId(processorRef.getCurrentProgram()+1);
 
 	m_presets.onChange = [this]()
 	{
